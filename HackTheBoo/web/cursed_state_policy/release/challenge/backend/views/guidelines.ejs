@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cursed Stale Policy</title>
+    <link rel="icon" type="image/png" href="/static/images/favicon.png" />
+    <link rel="preload" href="/static/images/pumpkin.gif" as="image">
+    <link rel="preload" href="/static/dist/<%= vite['src/main.js'].css[0] %>" as="style"/>
+    <link rel="stylesheet" href="/static/dist/<%= vite['src/main.js'].css[0] %>" />
+</head>
+</script>
+<body>
+    <img class="pumpkin" src="/static/images/pumpkin.gif" alt="pumpkin">
+    <img class="pumpkin2" src="/static/images/pumpkin.gif" alt="pumpkin2">
+
+
+    <div class="audio-control">
+      <button class="vol" style="background: none; border: none; cursor: pointer;">
+      <i id="volIcon" class="material-icons" style="font-size: 40px;">volume_off</i>
+      </button>
+  </div>
+    
+  <header class="navbar navbar-expand-lg bg-dark navbar-dark" data-bs-theme="dark">
+    <nav class="container-xxl bd-gutter flex-wrap flex-lg-nowrap" aria-label="Main navigation">
+        <div class="bd-navbar-toggle">
+            <button class="navbar-toggler p-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#bdSidebar" aria-controls="bdSidebar" aria-label="Toggle docs navigation">
+                <i class="material-icons">menu</i>
+            </button>
+        </div>
+  
+        <a class="navbar-brand p-0 me-0 me-lg-2" href="/" aria-label="CSP Analyser">
+            <i class="material-icons">settings</i>
+            CSP Analyser
+        </a>
+  
+        <div class="offcanvas-lg offcanvas-end flex-grow-1" tabindex="-1" id="bdNavbar" aria-labelledby="bdNavbarOffcanvasLabel">
+          <div class="offcanvas-header px-4 pb-0">
+            <h5 class="offcanvas-title text-white" id="bdNavbarOffcanvasLabel">CSP Analyser</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+          </div>
+        </div>
+  
+        <div class="ms-auto">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link py-2 px-0 px-lg-2" href="#guidelines">
+                    <i class="material-icons">list</i> Guidelines
+                </a>
+            </li>
+          </ul>
+        </div>
+    </nav>
+  </header>  
+    
+    <div class="container">        
+     <div class="container my-5">
+      <div class="p-5 text-center bg-body-tertiary rounded-3">
+          <i class="material-icons" style="font-size: 4rem; color: var(--bs-indigo);">shield</i>
+          <h2 class="text-body-emphasis mt-4">Content Security Policy (CSP) Reference</h2>
+          <p class="col-lg-8 mx-auto fs-5 text-muted">
+              The <code>Content-Security-Policy</code> HTTP response header helps you reduce XSS risks on modern browsers by declaring which dynamic resources are allowed to load.
+          </p>
+          <div class="d-inline-flex gap-2 mb-5">
+              <a class="btn btn-outline-secondary btn-lg px-4 rounded-pill" href="/" type="button">
+                  <i class="material-icons me-2">settings</i> CSP Analyser
+              </a>
+          </div>
+      </div>
+<div class="container mt-3">
+  <div class="bordered-container with-title">
+  <p class="title">What is <code>Content-Security-Policy</code>?</p>
+  <p class="fs-5 text-light">
+      <code>Content-Security-Policy</code> is the name of a HTTP response header that modern browsers use to enhance the security of the document (or web page). The Content-Security-Policy header allows you to restrict which resources (such as JavaScript, CSS, Images, etc.) can be loaded, and the URLs that they can be loaded from.
+  </p>
+  <p class="fs-5 text-light">
+      Although it is primarily used as a HTTP response header, you can also apply it via a <a href="/examples/meta/">meta tag</a>. The term Content Security Policy is often abbreviated as <abbr title="Content Security Policy">CSP</abbr>.
+  </p>
+  <p class="fs-5 text-light">
+      CSP was first designed to reduce the attack surface of Cross Site Scripting (XSS) attacks, later versions of the spec also protect against other forms of attack such as Click Jacking.
+  </p>
+</div>
+</div>
+  <div class="container mt-3">
+    <div class="bordered-container with-title">
+    <p class="title">CSP Directive Reference</h2>
+    <p class="fs-5 text-light">
+        The <code>Content-Security-Policy</code> header value is made up of one or more directives (defined below), multiple directives are separated with a semicolon <code>;</code>
+    </p>
+    <p class="fs-5 text-light">
+        This documentation is provided based on the Content Security Policy Level 2 <a href="https://www.w3.org/TR/CSP2/">W3C Recommendation</a>, and the CSP Level 3 <a href="https://www.w3.org/TR/CSP3/">W3C Working Draft</a>
+    </p>
+  </div>
+
+  </div>
+        <div id="csp-guide"></div>
+        
+        <h2 class="mt-5 text-light">Source List Reference</h2>
+        <table class="table table-bordered table-dark">
+            <thead>
+                <tr>
+                    <th>Source Value</th>
+                    <th>Example</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody id="source-list"></tbody>
+        </table>
+
+        <div id="csp-browser-support"></div>
+        <div id="csp-error-messages"></div>
+        <div id="csp-examples"></div>
+    </div>
+
+    <script type="module" src="/static/dist/<%= vite['src/main.js'].file %>" nonce="<%= nonce %>"></script>
+</body>
+</html>

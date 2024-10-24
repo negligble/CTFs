@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Cursed Stale Policy</title>
+  <link rel="icon" type="image/png" href="/static/images/favicon.png" />
+  <link rel="preload" href="/static/images/pumpkin.gif" as="image">
+  <link rel="preload" href="/static/dist/<%= vite['src/main.js'].css[0] %>" as="style"/>
+  <link rel="stylesheet" href="/static/dist/<%= vite['src/main.js'].css[0] %>" />
+  
+</head>
+<body>
+    <img class="pumpkin" src="/static/images/pumpkin.gif" alt="pumpkin">
+    <img class="pumpkin2" src="/static/images/pumpkin.gif" alt="pumpkin2">
+
+    <div class="audio-control">
+        <button class="vol" style="background: none; border: none; cursor: pointer;">
+        <i id="volIcon" class="material-icons ">volume_off</i>
+        </button>
+    </div>
+
+  <header class="navbar navbar-expand-lg bg-dark navbar-dark">
+    <nav class="container-xxl bd-gutter flex-wrap flex-lg-nowrap" aria-label="Main navigation">
+      <div class="bd-navbar-toggle">
+        <button class="navbar-toggler p-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#bdSidebar" aria-controls="bdSidebar" aria-label="Toggle navigation">
+          <i class="material-icons ">menu</i>
+        </button>
+      </div>
+
+      <a class="navbar-brand p-0 me-0 me-lg-2" href="/" aria-label="CSP Analyser">
+        <i class="material-icons ">settings</i> CSP Analyser
+      </a>
+
+      <div class="offcanvas-lg offcanvas-end flex-grow-1" tabindex="-1" id="bdNavbar" aria-labelledby="bdNavbarOffcanvasLabel">
+        <div class="offcanvas-header px-4 pb-0">
+          <h5 class="offcanvas-title text-white" id="bdNavbarOffcanvasLabel">CSP Analyser</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+      </div>
+
+      <div class="ms-auto">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link py-2 px-0 px-lg-2" href="/guidelines">
+              <i class="material-icons ">list</i> Guidelines
+            </a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+
+  <div class="container mt-5">
+    <div id="alerts"></div>
+
+    <h1 class="d-flex align-items-center justify-content-center">
+      CSP Evaluator
+      <span id="cspIcon" class="ms-3 material-icons" data-bs-toggle="tooltip" title="Loading tooltip...">policy</span>
+    </h1>
+
+    <textarea id="cspInput" class="form-control bg-dark text-light mb-3" spellcheck="false"></textarea>
+
+    <div class="button-group d-flex mb-3">
+      <button id="unsafePolicyButton" class="btn btn-danger btn-sm me-2">Sample Unsafe Policy</button>
+      <button id="safePolicyButton" class="btn btn-success btn-sm me-2">Sample Safe Policy</button>
+      <button id="analyzeButton" class="btn btn-primary btn-sm">Check CSP</button>
+    </div>
+
+    <textarea id="xssInput" class="form-control bg-dark text-light mb-3" spellcheck="false"></textarea>
+    <button id="triggerButton" class="btn btn-warning btn-sm mb-5">Trigger Bot</button>
+
+    <div id="analysisResults" class="card bg-dark text-light mb-5 hidden">
+      <div class="card-header">
+        <h3>Analysis Results</h3>
+      </div>
+      <div id="parsedCSP" class="card-body"></div>
+    </div>
+
+    <div id="violations" class="card bg-dark text-white mb-5 hidden">
+      <div class="card-header">
+        <h3>Most Recent CSP Violation</h3>
+      </div>
+      <div id="violationDetails" class="card-body"></div>
+    </div>
+
+    <div id="requestHistory" class="card bg-dark text-light mb-5 hidden">
+      <div class="card-header">
+        <h3>Request History</h3>
+      </div>
+      <div class="card-body">
+        <ul id="logList" class="list-group bg-dark text-white"></ul>
+      </div>
+    </div>
+
+    <div class="legend card bg-dark text-light">
+      <div class="card-header">
+        <h4>Legend</h4>
+      </div>
+      <div class="card-body">
+        <div class="high-severity-container d-flex align-items-center mb-2">
+          <i class="material-icons high-severity-icon">error</i>
+          <span class="ms-2">High severity finding</span>
+        </div>
+        <div class="medium-severity-container d-flex align-items-center mb-2">
+          <i class="material-icons medium-severity-icon">error_outline</i>
+          <span class="ms-2">Medium severity finding</span>
+        </div>
+        <div class="info-severity-container d-flex align-items-center mb-2">
+          <i class="material-icons info-severity-icon">info_outline</i>
+          <span class="ms-2">Information</span>
+        </div>
+        <div class="syntax-error-container d-flex align-items-center mb-2">
+          <i class="material-icons syntax-error-icon">clear</i>
+          <span class="ms-2">Syntax error</span>
+        </div>
+        <div class="all-good-container d-flex align-items-center mb-2">
+          <i class="material-icons all-good-icon">check_circle</i>
+          <span class="ms-2">All good</span>
+        </div>
+      </div>
+    </div>    
+ </div>
+  <script type="module" src="/static/dist/<%= vite['src/main.js'].file %>" nonce="<%= nonce %>"></script>
+</body>
+</html>

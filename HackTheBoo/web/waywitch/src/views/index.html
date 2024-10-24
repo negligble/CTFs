@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>WitchWay</title>
+        <link rel="icon" href="/static/images/logo.png" />
+        <link
+            rel="stylesheet"
+            type="text/css"
+            href="/static/css/bootstrap.min.css"
+        />
+        <link rel="stylesheet" type="text/css" href="/static/css/main.css" />
+        <!-- JWT Library -->
+        <script src="/static/js/jose.min.js"></script>
+
+        <style>
+            @import url("https://fonts.googleapis.com/css2?family=Creepster&display=swap");
+
+            body {
+                background-color: #1c1c1c;
+                background-size: cover;
+                background-attachment: fixed;
+                font-family: "Creepster", cursive;
+                color: #f1f1f1;
+            }
+
+            .navbar {
+                background-color: #262626 !important;
+                border-bottom: 3px solid #ff4500;
+            }
+
+            .navbar-brand {
+                font-size: 1.8rem;
+                font-family: "Creepster", cursive;
+            }
+
+            .navbar-nav .nav-link {
+                color: #ffa500 !important;
+            }
+
+            .navbar-nav .nav-link:hover {
+                color: #ff4500 !important;
+            }
+
+            .card-header {
+                background-color: #ff4500;
+                color: white;
+                font-size: 1.5rem;
+                font-family: "Creepster", cursive;
+                text-align: center;
+            }
+
+            .card {
+                background-color: rgba(0, 0, 0, 0.8);
+                border-radius: 15px;
+                color: white;
+            }
+
+            .form-control {
+                background-color: #262626;
+                border: 1px solid #ff4500;
+                color: white;
+            }
+
+            .form-control:focus {
+                background-color: #1c1c1c;
+                border-color: #ff4500;
+                color: white;
+                box-shadow: 0 0 10px rgba(255, 69, 0, 0.5);
+            }
+
+            .btn-primary {
+                background-color: #ff4500;
+                border-color: #ff4500;
+                transition:
+                    background-color 0.3s,
+                    transform 0.3s;
+            }
+
+            .btn-primary:hover {
+                background-color: #dc143c;
+                border-color: #dc143c;
+                transform: scale(1.05);
+            }
+
+            .btn-danger {
+                background-color: #b22222;
+                border-color: #b22222;
+            }
+
+            .btn-danger:hover {
+                background-color: #ff6347;
+                border-color: #ff6347;
+                transform: scale(1.05);
+            }
+
+            .ticket-label {
+                color: #ffa500;
+            }
+
+            h5.segment-header {
+                color: #ff4500;
+                font-family: "Creepster", cursive;
+            }
+
+            .card-title,
+            .card-subtitle {
+                color: #ff6347;
+            }
+
+            .card-text {
+                color: #f1f1f1;
+            }
+
+            #resp-msg {
+                color: #f1f1f1;
+            }
+
+            .alert-info {
+                background-color: rgba(255, 165, 0, 0.2);
+                color: #ffa500;
+            }
+        </style>
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#"
+                    ><img src="/static/images/logo.png" class="navbar-logo" />
+                    <span>WitchWay</span></a
+                >
+            </div>
+        </nav>
+        <div class="container-lg mt-5" id="tickets-container">
+            <div class="card shadow-lg">
+                <h5 class="card-header text-uppercase">Submit Your Ticket</h5>
+                <div class="card-body">
+                    <!-- Name Field -->
+                    <label for="ticket-name" class="form-label ticket-label"
+                        >Name</label
+                    >
+                    <input
+                        style="margin-bottom: 0"
+                        type="text"
+                        class="form-control"
+                        id="ticket-name"
+                        placeholder="Enter your name"
+                    />
+
+                    <!-- Description Field -->
+                    <label
+                        for="ticket-desc"
+                        class="form-label ticket-label mt-3"
+                        >Description</label
+                    >
+                    <textarea
+                        style="margin-top: 0"
+                        class="form-control"
+                        id="ticket-desc"
+                        rows="5"
+                        placeholder="Describe your issue"
+                    ></textarea>
+
+                    <!-- Submit Button -->
+                    <button
+                        id="submit-btn"
+                        type="submit"
+                        class="btn btn-primary mt-4"
+                    >
+                        Submit Ticket
+                    </button>
+
+                    <!-- Message Display -->
+                    <p id="message-display" class="mt-4 text-light"></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- JavaScript -->
+        <script>
+            function getCookie(name) {
+                const value = `; ${document.cookie}`;
+                const parts = value.split(`; ${name}=`);
+                if (parts.length === 2) return parts.pop().split(";").shift();
+            }
+
+            async function generateJWT() {
+                const existingToken = getCookie("session_token");
+
+                if (existingToken) {
+                    console.log("Session token already exists:", existingToken);
+                    return;
+                }
+
+                const randomNumber = Math.floor(Math.random() * 10000);
+                const guestUsername = "guest_" + randomNumber;
+
+                const header = {
+                    alg: "HS256",
+                    typ: "JWT",
+                };
+
+                const payload = {
+                    username: guestUsername,
+                    iat: Math.floor(Date.now() / 1000),
+                };
+
+                const secretKey = await crypto.subtle.importKey(
+                    "raw",
+                    new TextEncoder().encode("[REDACTED]"),
+                    { name: "HMAC", hash: "SHA-256" },
+                    false,
+                    ["sign"],
+                );
+
+                const headerBase64 = btoa(JSON.stringify(header))
+                    .replace(/\+/g, "-")
+                    .replace(/\//g, "_")
+                    .replace(/=+$/, "");
+                const payloadBase64 = btoa(JSON.stringify(payload))
+                    .replace(/\+/g, "-")
+                    .replace(/\//g, "_")
+                    .replace(/=+$/, "");
+
+                const dataToSign = `${headerBase64}.${payloadBase64}`;
+                const signatureArrayBuffer = await crypto.subtle.sign(
+                    { name: "HMAC" },
+                    secretKey,
+                    new TextEncoder().encode(dataToSign),
+                );
+
+                const signatureBase64 = btoa(
+                    String.fromCharCode.apply(
+                        null,
+                        new Uint8Array(signatureArrayBuffer),
+                    ),
+                )
+                    .replace(/\+/g, "-")
+                    .replace(/\//g, "_")
+                    .replace(/=+$/, "");
+
+                const token = `${dataToSign}.${signatureBase64}`;
+
+                document.cookie = `session_token=${token}; path=/; max-age=${60 * 60 * 24}; Secure`;
+
+                console.log("Generated JWT Session Token:", token);
+            }
+
+            document
+                .getElementById("submit-btn")
+                .addEventListener("click", async (event) => {
+                    event.preventDefault();
+
+                    const name = document.getElementById("ticket-name").value;
+                    const description =
+                        document.getElementById("ticket-desc").value;
+
+                    const response = await fetch("/submit-ticket", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({ name, description }),
+                    });
+
+                    const result = await response.json();
+                    document.getElementById("message-display").textContent =
+                        result.message
+                            ? result.message
+                            : "Ticket submitted successfully!";
+                });
+
+            window.addEventListener("load", generateJWT);
+        </script>
+    </body>
+</html>

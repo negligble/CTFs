@@ -1,0 +1,133 @@
+@import url("https://fonts.googleapis.com/css2?family=PT+Sans&display=swap");
+
+html,
+body {
+    height: 100%;
+    font-family: "PT Sans", sans-serif;
+}
+body {
+    background-color: rgb(235 238 243);
+}
+p {
+    text-align: center;
+    margin: 0 auto;
+}
+
+.card-header {
+    padding: 0.5rem 1rem;
+    margin-bottom: 0;
+    background-color: rgb(39, 128, 227);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+    color: white;
+}
+input {
+    margin-bottom: 1.5rem;
+}
+
+.navbar-logo {
+    display: inline;
+    width: 40px;
+    margin-right: 5px;
+}
+
+.navbar-brand span {
+    font-weight: bolder;
+    text-transform: uppercase;
+    font-size: 18px;
+    letter-spacing: 1px;
+}
+
+#resp-msg {
+    display: none;
+    margin-top: 2rem;
+}
+#resp-msg2 {
+    display: none;
+    margin-top: 2rem;
+}
+.alert {
+    position: relative;
+    padding: 0.5rem 1.25rem;
+    margin-bottom: 1rem;
+    border: 1px solid transparent;
+    border-radius: 0.25rem;
+}
+
+.auth-container {
+    min-width: 600px;
+    margin: 100px 350px;
+    padding: 50px;
+    padding-top: 0px;
+    background-color: #fff;
+}
+
+.stats-container {
+    min-width: 600px;
+    margin: 100px 350px;
+    padding: 50px;
+    padding-top: 0px;
+    background-color: #fff;
+}
+
+.stats-container > .container {
+    width: 500px;
+}
+
+.submit-btns {
+    margin: 0 auto;
+    display: block;
+}
+
+#dash-p1 {
+    color: #1d1d1d;
+    font-size: 16pt;
+}
+
+#sub-p1 {
+    font-size: 15px;
+    font-weight: lighter;
+    margin-bottom: 20px;
+}
+
+img {
+    margin: auto;
+    display: block;
+    width: 200px;
+}
+
+#signup-group,
+#register-btn {
+    display: none;
+}
+
+.segment-header {
+    text-align: left;
+    font-size: 18px;
+    font-weight: bold;
+    margin: 20px 0px 10px 0px;
+    padding-left: 15px;
+    border-left: 2px solid #50bdf2;
+}
+
+#uploaded-file-ref {
+    text-align: left;
+    margin: 20px 0px;
+}
+
+.hidden {
+    display: none;
+}
+
+.tickets-stat {
+    font-size: 20px;
+}
+
+#tickets-table {
+    display: none;
+}
+
+#ticket-desc {
+    margin-top: 20px;
+    width: 100%;
+    height: 200px;
+}
