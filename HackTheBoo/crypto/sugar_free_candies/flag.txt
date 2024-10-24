@@ -1,1 +1,0 @@
-HTB{__protecting_the_secret_in_equations_is_not_secure__}
